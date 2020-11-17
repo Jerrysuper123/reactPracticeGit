@@ -10,7 +10,7 @@
   font-weight: bold;
 }
 
-.button{
+.Button{
 background-Color: red;
 color: white;
 font: inherit;
@@ -20,7 +20,16 @@ cursor: pointer;
 }
 
 
-.button:hover {
+.Button:hover {
   background-Color: lightgreen;
   color: black
+}
+
+/* add a new class */
+.Button.Red{
+  background-color: red;
+}
+
+.Button.Red:hover{
+  background-color: salmon;
 }

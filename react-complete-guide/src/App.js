@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import './App.css';
+//due to configuration, we can import classes from
+//we can use classes to house all css
+import classes from './App.css';
 
 import Person from './Person/Person';
-
-// use styled components div `css style` and make it a component StyleDiv, use it place of div below
-// below media query does not have :
-//write regular css below
 
 class App extends Component {
   state = {
@@ -49,11 +47,11 @@ class App extends Component {
 
 
   render() {
-    // inline style (using media query in inline style)
-    const style = {
-
-    };
     let persons = null;
+
+// access Button from classes CSS
+    let btnClass = classes.Button;
+
     if (this.state.showPersons) {
       persons = (
         <div>
@@ -69,25 +67,25 @@ class App extends Component {
         </div>
       );
 
-      style.backgroundColor = 'red';
+      // style.backgroundColor = 'red';
+      btnClass.push(classes.Red);
     };
 
-    const classes = [];
+    const assignmentClasses = [];
     if (this.state.persons.length <= 2) {
-      classes.push('red'); //['red]
+      assignmentClasses.push(classes.red); //['red]
     }
 
     if (this.state.persons.length <= 1) {
-      classes.push('bold'); //['red','bold']
+      assignmentClasses.push(classes.bold); //['red','bold']
     }
 
     return (
-      // custom styled div wrapper
-      <div className='App'>
+      <div className={classes.App}>
         <h1>hi i am jerry</h1>
-        <p className={classes.join(' ')}>Dynamic classname</p>
+        <p className={assignmentClasses.join(' ')}>Dynamic classname</p>
         <button
-          className="button"
+          className={btnClass.join(' ')}
           onClick={this.togglePersonHandler}>Toggle Persons</button>
         {persons}
       </div>
@@ -95,5 +93,4 @@ class App extends Component {
   }
 }
 
-// wrap radium component over your app
 export default App;
