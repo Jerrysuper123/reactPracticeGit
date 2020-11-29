@@ -1,96 +1,110 @@
 import React, { Component } from 'react';
-//due to configuration, we can import classes from
-//we can use classes to house all css
-import classes from './App.css';
 
+import classes from './App.css';
 import Person from './Person/Person';
 
 class App extends Component {
   state = {
     persons: [
-      { id: 'asda', name: "Jerry", age: 28 },
-      { id: 'sdas', name: "manu", age: 27 },
-      { id: 'xxx', name: "step", age: 26 }
+      { id: 'asfa1', name: 'Max', age: 28 },
+      { id: 'vasdf1', name: 'Manu', age: 29 },
+      { id: 'asdf11', name: 'Stephanie', age: 26 }
     ],
-    otherState: "some other value",
+    otherState: 'some other value',
     showPersons: false
-  }
+  };
 
-  nameChangeHandler = (event, id) => {
+  nameChangedHandler = (event, id) => {
     const personIndex = this.state.persons.findIndex(p => {
       return p.id === id;
-    })
+    });
 
-    const person = { ...this.state.persons[personIndex] }
+    const person = {
+      ...this.state.persons[personIndex]
+    };
+
+    // const person = Object.assign({}, this.state.persons[personIndex]);
 
     person.name = event.target.value;
+
     const persons = [...this.state.persons];
     persons[personIndex] = person;
 
     this.setState({ persons: persons });
   };
 
-  togglePersonHandler = () => {
-    const doesShow = this.state.showPersons;
-    this.setState({
-      showPersons: !doesShow
-    });
-
-  };
-
-  deleteNameHandler = (indexPerson) => {
-
+  deletePersonHandler = personIndex => {
+    // const persons = this.state.persons.slice();
     const persons = [...this.state.persons];
-    persons.splice(indexPerson, 1);
+    persons.splice(personIndex, 1);
     this.setState({ persons: persons });
   };
 
+  togglePersonsHandler = () => {
+    const doesShow = this.state.showPersons;
+    this.setState({ showPersons: !doesShow });
+  };
 
   render() {
     let persons = null;
-
-// access Button from classes CSS
-    let btnClass = classes.Button;
+    let btnClass = '';
 
     if (this.state.showPersons) {
       persons = (
         <div>
           {this.state.persons.map((person, index) => {
-            return <Person
-              click={() => this.deleteNameHandler(index)}
-              name={person.name}
-              age={person.age}
-              changed={(event) => this.nameChangeHandler(event, person.id)}
-              key={person.id}
-            />
+            return (
+              <Person
+                click={() => this.deletePersonHandler(index)}
+                name={person.name}
+                age={person.age}
+                key={person.id}
+                changed={event => this.nameChangedHandler(event, person.id)}
+              />
+            );
           })}
         </div>
       );
 
-      // style.backgroundColor = 'red';
-      btnClass.push(classes.Red);
-    };
+      btnClass = classes.Red;
+    }
 
-    const assignmentClasses = [];
+    // use array to contain css class
+    const assignedClasses = [];
     if (this.state.persons.length <= 2) {
-      assignmentClasses.push(classes.red); //['red]
+      assignedClasses.push(classes.red); // classes = ['red']
+    }
+    if (this.state.persons.length <= 1) {
+      assignedClasses.push(classes.bold); // classes = ['red', 'bold']
     }
 
-    if (this.state.persons.length <= 1) {
-      assignmentClasses.push(classes.bold); //['red','bold']
-    }
+    
+// array that has both red and bold
+//[.red {
+//   color: red;
+// },
+
+// .bold {
+//   font-weight: bold;
+// }]
+//when joined, they become 2 separate CSS classes
+// .red{color:red} .bold{font-weight: bold}
 
     return (
       <div className={classes.App}>
-        <h1>hi i am jerry</h1>
-        <p className={assignmentClasses.join(' ')}>Dynamic classname</p>
-        <button
-          className={btnClass.join(' ')}
-          onClick={this.togglePersonHandler}>Toggle Persons</button>
+        <h1>Hi, I'm a React App</h1>
+        <p className={assignedClasses.join(' ')}>This is really working!</p>
+
+        {/* .button (green), when toggle button.red, when plus hover .button.red:hover */}
+        <button className={btnClass} onClick={this.togglePersonsHandler}>
+          Toggle Persons
+        </button>
         {persons}
       </div>
     );
+    // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
   }
 }
 
 export default App;
+

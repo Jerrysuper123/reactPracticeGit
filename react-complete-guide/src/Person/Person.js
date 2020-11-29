@@ -1,21 +1,19 @@
+import React from 'react';
 
-import React from "react";
-import './Person.css';
+import classes from './Person.css';
 
-const person = (props) => {
-    // use media query from radium, but you need to wrap your application in StyleRoot.
-    // const style ={
-    //     '@media (min-width:500px)':{
-    //         width: '450px'
-    //     }
-    // }
-    return (
-        <div className="Person">
-            <p onClick={props.click}>i am a {props.name} and i am {props.age} years old!</p>
-            <p>{props.children}</p>
-            <input type="text" onChange={props.changed} value={props.name}/>
-        </div>
-    );
-}
+const person = props => {
+  return (
+    <div className={classes.Person}>
+      <p onClick={props.click}>
+        I'm {props.name} and I am {props.age} years old!
+      </p>
+      <p>{props.children}</p>
+      <input type="text" onChange={props.changed} value={props.name} />
+    </div>
+  );
+};
 
 export default person;
+
+
